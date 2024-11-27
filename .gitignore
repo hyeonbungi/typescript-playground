@@ -17,8 +17,5 @@ yarn-error.log*
 .idea/
 .DS_Store
 
-# ESLint cache
-.eslintcache
-
 # Prettier
 .prettierignore

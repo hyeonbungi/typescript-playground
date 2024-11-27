@@ -1,6 +1,6 @@
 # TypeScript Playground
 
-이 프로젝트는 TypeScript로 작성된 Node.js 애플리케이션입니다. 이 프로젝트는 nodemon을 사용하여 코드 변경을 자동으로 감지하고, ESLint와 Prettier를 사용하여 코드 품질을 유지하며, 엄격한 TypeScript 설정을 통해 안전한 코드를 작성하는 것을 목표로 합니다.
+이 프로젝트는 TypeScript로 작성된 Node.js 애플리케이션입니다. 이 프로젝트는 nodemon을 사용하여 코드 변경을 자동으로 감지하고, Prettier를 사용하여 코드 품질을 유지하며, 엄격한 TypeScript 설정을 통해 안전한 코드를 작성하는 것을 목표로 합니다.
 
 ## 프로젝트 설정
 
@@ -47,14 +47,6 @@ npm run build
 npm run start
 ```
 
-### 코드 린트
-
-ESLint를 사용하여 코드를 린트합니다. 이 명령어는 `.ts` 확장자를 가진 모든 파일을 검사합니다.
-
-```bash
-npm run lint
-```
-
 ### 코드 포맷팅
 
 Prettier를 사용하여 코드를 포맷팅합니다.
@@ -76,7 +68,6 @@ typescript-playground/
 ├── .github/            # GitHub Actions 설정 파일
 │   └── workflows/
 │       └── ci.yml      # CI 설정 파일
-├── .eslintrc.json      # ESLint 설정 파일
 ├── .prettierrc         # Prettier 설정 파일
 ├── .gitignore          # Git 무시 파일
 ├── Dockerfile          # Docker 설정 파일
