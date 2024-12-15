@@ -1,7 +1,8 @@
 {
   "name": "typescript-playground",
   "version": "1.0.0",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
@@ -9,6 +10,8 @@
     "format": "prettier --write ."
   },
   "author": "hyeonbungi <kimhyeonbung@gmail.com>",
+  "homepage": "https://github.com/hyeonbungi/typescript-playground",
+  "bugs": "https://github.com/hyeonbungi/typescript-playground/issues",
   "license": "MIT",
   "description": "편리한 TypeScript 코드 작성을 위한 플레이그라운드",
   "devDependencies": {
@@ -18,5 +21,9 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "keywords": [
+    "typescript",
+    "playground"
+  ]
 }
