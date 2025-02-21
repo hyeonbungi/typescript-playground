@@ -18,7 +18,7 @@ cd typescript-playground
 프로젝트의 의존성을 설치합니다.
 
 ```bash
-npm install
+pnpm install
 ```
 
 ## 사용법
@@ -28,7 +28,7 @@ npm install
 `nodemon`을 사용하여 코드 변경을 감지하고 자동으로 애플리케이션을 재실행합니다.
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ### 코드 빌드
@@ -36,23 +36,31 @@ npm run dev
 TypeScript 코드를 JavaScript로 컴파일합니다. 컴파일된 코드는 `dist` 디렉터리에 저장됩니다.
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### 코드 실행
 
-`npm run build` 명령어로 컴파일한 JavaScript 코드를 실행합니다.
+`pnpm run build` 명령어로 컴파일한 JavaScript 코드를 실행합니다.
 
 ```bash
-npm run start
+pnpm run start
 ```
 
-### 코드 포맷팅
+### 코드 포맷
 
-Prettier를 사용하여 코드를 포맷팅합니다.
+Prettier를 사용하여 코드를 포맷합니다.
 
 ```bash
-npm run format
+pnpm run format
+```
+
+### 코드 린트
+
+ESLint를 사용하여 코드를 린트합니다.
+
+```bash
+pnpm run lint
 ```
 
 ## 프로젝트 구조
@@ -63,8 +71,6 @@ typescript-playground/
 ├── node_modules/       # 프로젝트 의존성
 ├── src/                # TypeScript 소스 파일
 │   └── index.ts        # 애플리케이션 진입점
-├── .vscode/            # VSCode 설정 파일
-│   └── settings.json   # VSCode 설정 파일
 ├── .github/            # GitHub Actions 설정 파일
 │   └── workflows/
 │       └── ci.yml      # CI 설정 파일
@@ -73,7 +79,8 @@ typescript-playground/
 ├── Dockerfile          # Docker 설정 파일
 ├── LICENSE             # 라이선스 파일
 ├── nodemon.json        # nodemon 설정 파일
-├── package.json        # npm 설정 파일
+├── package.json        # 패키지 정보 파일
+├── pnpm-lock.yaml      # pnpm 의존성 정보 파일
 ├── tsconfig.json       # TypeScript 설정 파일
 └── README.md           # 프로젝트 설명 파일
 ```
