@@ -12,7 +12,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '22'
-      - run: npm install
-      - run: npm run format
-      - run: npm run build
-      - run: npm run start
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - run: pnpm install
+      - run: pnpm run format
+      - run: pnpm run lint
+      - run: pnpm run build
+      - run: pnpm run start
