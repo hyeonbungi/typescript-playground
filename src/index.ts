@@ -1,1 +1,3 @@
-console.log('Hello, TypeScript!');
+import { runExample02 } from './examples';
+
+runExample02();
