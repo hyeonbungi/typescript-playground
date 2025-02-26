@@ -1,3 +1,3 @@
-import { runExample02 } from './examples';
+import { runExample03 } from './examples';
 
-runExample02();
+runExample03();
