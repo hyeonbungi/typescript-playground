@@ -1,3 +1,3 @@
-import { runExample03 } from './examples';
+import { generateLuckyNumbersList } from './generate-lucky-numbers';
 
-runExample03();
+console.log(generateLuckyNumbersList(5));
