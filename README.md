@@ -47,22 +47,6 @@ pnpm run build
 pnpm run start
 ```
 
-### 코드 포맷
-
-Prettier를 사용하여 코드를 포맷합니다.
-
-```bash
-pnpm run format
-```
-
-### 코드 린트
-
-ESLint를 사용하여 코드를 린트합니다.
-
-```bash
-pnpm run lint
-```
-
 ## 프로젝트 구조
 
 ```plaintext
@@ -74,7 +58,6 @@ typescript-playground/
 ├── .github/            # GitHub Actions 설정 파일
 │   └── workflows/
 │       └── ci.yml      # CI 설정 파일
-├── .prettierrc         # Prettier 설정 파일
 ├── .gitignore          # Git 무시 파일
 ├── Dockerfile          # Docker 설정 파일
 ├── LICENSE             # 라이선스 파일
