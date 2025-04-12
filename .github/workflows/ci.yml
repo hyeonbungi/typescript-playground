@@ -15,7 +15,6 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - run: pnpm install
-      - run: pnpm run format
-      - run: pnpm run lint
+      - run: pnpm run check
       - run: pnpm run build
       - run: pnpm run start

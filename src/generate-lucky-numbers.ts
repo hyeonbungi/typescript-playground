@@ -1,4 +1,4 @@
-import { randomInt } from 'crypto';
+import { randomInt } from 'node:crypto';
 
 const LUCKY_NUMBERS_COUNT = 6;
 const LUCKY_NUMBER_MIN = 1;
