@@ -1,5 +1,5 @@
 {
-  "name": "ch01-getting-started-with-nodejs",
+  "name": "typescript-playground",
   "description": "편리한 TypeScript 코드 작성을 위한 플레이그라운드",
   "version": "1.0.0",
   "main": "dist/index.js",
