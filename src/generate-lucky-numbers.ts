@@ -3,20 +3,25 @@ import { randomInt } from 'node:crypto';
 const LUCKY_NUMBERS_COUNT = 6;
 const LUCKY_NUMBER_MIN = 1;
 const LUCKY_NUMBER_MAX = 45;
-const MAX_DUPLICATE_NUMBERS = 2; // 세트 간 최대 중복 허용 개수
+const MAX_DUPLICATE_NUMBERS = 2; // 세트 간 최대 허용 중복 개수
 const MAX_RETRY_ATTEMPTS = 100; // 최대 재시도 횟수
 
 /**
- * Generates a list of unique lucky numbers with minimal overlap between sets.
- * @param quantity - The number of sets of lucky numbers to generate.
- * @returns A list of sorted arrays containing unique lucky numbers.
+ * 겹치는 숫자를 최소화하여 여러 세트의 로또 번호를 생성합니다.
+ * @param quantity - 생성할 세트 수
+ * @param maxDuplicate - 세트 간 허용되는 최대 중복 숫자 수 (기본값: 2)
+ * @returns 정렬된 로또 번호 배열들의 리스트
  */
-export function generateLuckyNumbersList(quantity: number): number[][] {
+export function generateLuckyNumbersList(
+  quantity: number,
+  maxDuplicate: number = MAX_DUPLICATE_NUMBERS,
+): number[][] {
   const luckyNumbersList: number[][] = [];
 
-  for (let setIndex = 0; setIndex < quantity; setIndex++) {
+  for (let i = 0; i < quantity; i++) {
     const luckyNumbers = generateUniqueLuckyNumbersWithMinimalOverlap(
       luckyNumbersList,
+      maxDuplicate,
     );
     luckyNumbersList.push(luckyNumbers);
   }
@@ -25,76 +30,75 @@ export function generateLuckyNumbersList(quantity: number): number[][] {
 }
 
 /**
- * Generates a single set of unique lucky numbers with minimal overlap with existing sets.
- * @param existingSets - Previously generated sets to avoid excessive overlap.
- * @returns A sorted array of unique lucky numbers.
+ * 기존 세트들과 겹치는 숫자를 최소화하여 하나의 로또 번호 세트를 생성합니다.
+ * 조건을 만족하지 못할 경우 최대 재시도 횟수 동안 반복하며,
+ * 가장 겹침이 적은 후보를 최종적으로 반환합니다.
+ * 
+ * @param existingSets - 기존에 생성된 세트 목록
+ * @param maxAllowedOverlap - 세트 간 허용되는 최대 중복 숫자 수
+ * @returns 정렬된 하나의 로또 번호 세트
  */
 function generateUniqueLuckyNumbersWithMinimalOverlap(
   existingSets: number[][],
+  maxAllowedOverlap: number,
 ): number[] {
+  let bestCandidate: number[] = [];
+  let lowestMaxOverlap = Infinity;
+
   for (let attempt = 0; attempt < MAX_RETRY_ATTEMPTS; attempt++) {
     const candidateSet = generateUniqueLuckyNumbers();
 
-    // 기존 세트들과의 중복 검사
-    let maxOverlap = 0;
-    for (const existingSet of existingSets) {
-      const overlap = countOverlap(candidateSet, existingSet);
-      maxOverlap = Math.max(maxOverlap, overlap);
+    const maxOverlap = Math.max(
+      ...existingSets.map((set) => countOverlap(candidateSet, set)),
+    );
+
+    if (maxOverlap <= maxAllowedOverlap) {
+      return candidateSet;
     }
 
-    // 중복이 허용 범위 내라면 해당 세트 반환
-    if (maxOverlap <= MAX_DUPLICATE_NUMBERS) {
-      return candidateSet;
+    if (maxOverlap < lowestMaxOverlap) {
+      lowestMaxOverlap = maxOverlap;
+      bestCandidate = candidateSet;
     }
   }
 
-  // 최대 재시도 횟수를 초과한 경우 마지막으로 생성된 세트 반환
-  return generateUniqueLuckyNumbers();
+  // 재시도에도 조건을 만족하는 세트를 찾지 못한 경우, 가장 덜 겹치는 후보를 반환
+  return bestCandidate;
 }
 
 /**
- * Counts the number of overlapping numbers between two sets.
- * @param set1 - First set of numbers.
- * @param set2 - Second set of numbers.
- * @returns The number of overlapping numbers.
+ * 두 숫자 세트 간의 중복된 숫자 개수를 계산합니다.
+ * @param set1 - 첫 번째 숫자 세트
+ * @param set2 - 두 번째 숫자 세트
+ * @returns 겹치는 숫자의 개수
  */
 function countOverlap(set1: number[], set2: number[]): number {
   const set1Set = new Set(set1);
-  let overlapCount = 0;
-
-  for (const num of set2) {
-    if (set1Set.has(num)) {
-      overlapCount++;
-    }
-  }
-
-  return overlapCount;
+  return set2.reduce((count, num) => count + (set1Set.has(num) ? 1 : 0), 0);
 }
 
 /**
- * Generates a single set of unique lucky numbers.
- * @returns A sorted array of unique lucky numbers.
+ * 하나의 로또 번호 세트를 생성합니다.
+ * @param count - 생성할 고유 번호 개수 (기본값: 6)
+ * @returns 정렬된 로또 번호 배열
  */
-function generateUniqueLuckyNumbers(): number[] {
-  const luckyNumbers: Set<number> = new Set();
+function generateUniqueLuckyNumbers(count: number = LUCKY_NUMBERS_COUNT): number[] {
+  const luckyNumbers = new Set<number>();
 
-  while (luckyNumbers.size < LUCKY_NUMBERS_COUNT) {
-    const luckyNumber = generateRandomNumber(
-      LUCKY_NUMBER_MIN,
-      LUCKY_NUMBER_MAX,
-    );
-    luckyNumbers.add(luckyNumber);
+  while (luckyNumbers.size < count) {
+    const number = generateRandomNumber(LUCKY_NUMBER_MIN, LUCKY_NUMBER_MAX);
+    luckyNumbers.add(number);
   }
 
-  return Array.from(luckyNumbers).sort((a, b) => a - b);
+  return [...luckyNumbers].sort((a, b) => a - b);
 }
 
 /**
- * Generates a cryptographically secure random number between the given min and max values (inclusive).
- * @param min - The minimum value.
- * @param max - The maximum value.
- * @returns A random number between min and max.
+ * 주어진 범위 내에서 암호학적으로 안전한 랜덤 숫자를 생성합니다.
+ * @param min - 최소 값 (포함)
+ * @param max - 최대 값 (포함)
+ * @returns 생성된 랜덤 숫자
  */
 function generateRandomNumber(min: number, max: number): number {
-  return randomInt(min, max + 1); // `randomInt` is inclusive of `min` and exclusive of `max`, so add 1 to include `max`.
+  return randomInt(min, max + 1); // randomInt는 [min, max) 범위이므로, max 포함을 위해 +1
 }
